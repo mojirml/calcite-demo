@@ -1,7 +1,5 @@
 package pers.shezm.calcite.test;
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Lists;
 import org.apache.calcite.plan.RelOptPlanner;
 import org.apache.calcite.plan.RelOptRule;
 import org.apache.calcite.plan.RelOptUtil;
@@ -11,15 +9,22 @@ import org.apache.calcite.plan.hep.HepProgramBuilder;
 import org.apache.calcite.rel.RelNode;
 import org.apache.calcite.rel.RelRoot;
 import org.apache.calcite.rel.core.Filter;
-import org.apache.calcite.rel.metadata.*;
+import org.apache.calcite.rel.metadata.CachingRelMetadataProvider;
+import org.apache.calcite.rel.metadata.ChainedRelMetadataProvider;
+import org.apache.calcite.rel.metadata.RelMetadataProvider;
+import org.apache.calcite.rel.metadata.RelMetadataQuery;
 import org.apache.calcite.sql.SqlExplainLevel;
-import pers.shezm.calcite.optimizer.converter.CSVTableScanConverter;
-import pers.shezm.calcite.optimizer.cost.DefaultRelMetadataProvider;
-import pers.shezm.calcite.utils.CalciteUtil;
+
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
+
+import pers.shezm.calcite.optimizer.converter.CSVTableScanConverter;
+import pers.shezm.calcite.optimizer.cost.DefaultRelMetadataProvider;
+import pers.shezm.calcite.utils.CalciteUtil;
 
 /**
  * 通过 MetadataProvider 的方式，并实现相关的 MetadataHandler，最终实现自己计算 cost 的逻辑
@@ -78,10 +83,12 @@ public class Test5 {
         if (followPlanChanges) {
             programBuilder.addMatchOrder(order);
             programBuilder = programBuilder.addRuleCollection(ImmutableList.copyOf(rules));
+//            programBuilder = programBuilder.addRuleCollection(RboRuleUitls.initDefaultRules());
         } else {
             // TODO: Should this be also TOP_DOWN?
-            for (RelOptRule r : rules)
+            for (RelOptRule r : rules) {
                 programBuilder.addRuleInstance(r);
+            }
         }
 
         // Create planner and copy context
@@ -91,6 +98,7 @@ public class Test5 {
         List<RelMetadataProvider> list = Lists.newArrayList();
         list.add(mdProvider);
         planner.registerMetadataProviders(list);
+
         RelMetadataProvider chainedProvider = ChainedRelMetadataProvider.of(list);
         basePlan.getCluster().setMetadataProvider(
                 new CachingRelMetadataProvider(chainedProvider, planner));

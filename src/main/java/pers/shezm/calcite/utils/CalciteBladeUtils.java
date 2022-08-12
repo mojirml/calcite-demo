@@ -56,7 +56,11 @@ public class CalciteBladeUtils {
     this.schemaPlus = Frameworks.createRootSchema(true);
   }
 
-  // step 1: 初始化表的列信息
+  /**
+   * step 1: 初始化表的列信息,这里可以自定义不同的获取schema方式
+   *
+   * @param filePaths
+   */
   private void initScahema(String... filePaths) {
     SchemaPlus rootSchema = Frameworks.createRootSchema(true);
     addFunctions(rootSchema);
@@ -99,7 +103,7 @@ public class CalciteBladeUtils {
   }
 
   /**
-   * 创建自有函数
+   * 创建自有函数，以便解析正常
    *
    * @param rootSchema
    */
