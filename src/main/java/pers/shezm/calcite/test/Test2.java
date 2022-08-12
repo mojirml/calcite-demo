@@ -1,8 +1,5 @@
 package pers.shezm.calcite.test;
 
-import org.apache.calcite.plan.ConventionTraitDef;
-import org.apache.calcite.rel.RelDistributionTraitDef;
-import pers.shezm.calcite.utils.CalciteUtil;
 import org.apache.calcite.config.Lex;
 import org.apache.calcite.jdbc.CalcitePrepare;
 import org.apache.calcite.plan.RelOptTable;
@@ -19,6 +16,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.Queue;
+
+import pers.shezm.calcite.utils.CalciteUtil;
 
 /**
  * 使用自定义的 csv 源，解析校验 SQL ，遍历 RelNode 树，统计其中一些信息并打印
@@ -62,6 +61,7 @@ public class Test2 {
                 .defaultSchema(prepareContext.getRootSchema().plus())
 //                .traitDefs(ConventionTraitDef.INSTANCE, RelDistributionTraitDef.INSTANCE)
                 .build();
+        System.out.println(config.toString());
         Planner planner = Frameworks.getPlanner(config);
         RelRoot root = null;
         try {

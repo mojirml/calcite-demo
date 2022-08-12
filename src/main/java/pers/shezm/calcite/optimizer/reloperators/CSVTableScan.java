@@ -1,11 +1,16 @@
 package pers.shezm.calcite.optimizer.reloperators;
 
-import org.apache.calcite.plan.*;
+import org.apache.calcite.plan.RelOptCluster;
+import org.apache.calcite.plan.RelOptCost;
+import org.apache.calcite.plan.RelOptPlanner;
+import org.apache.calcite.plan.RelOptTable;
+import org.apache.calcite.plan.RelTraitSet;
 import org.apache.calcite.rel.core.TableScan;
 import org.apache.calcite.rel.metadata.RelMetadataQuery;
 
 public class CSVTableScan extends TableScan implements CSVRel {
     private RelOptCost cost;
+    
     /**
      * RelOptCluster：palnner 运行时的环境，保存上下文信息
      * RelTrait：用来定义逻辑表的物理相关属性（physical property），三种主要的 trait 类型是：Convention、RelCollation、RelDistribution；
