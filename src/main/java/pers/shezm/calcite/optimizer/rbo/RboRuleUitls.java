@@ -6,6 +6,7 @@ import org.apache.calcite.rel.rules.FilterJoinRule;
 import org.apache.calcite.rel.rules.FilterProjectTransposeRule;
 import org.apache.calcite.rel.rules.ProjectJoinTransposeRule;
 import org.apache.calcite.rel.rules.ProjectMergeRule;
+import org.apache.calcite.rel.rules.ProjectRemoveRule;
 import org.apache.calcite.rel.rules.ProjectSortTransposeRule;
 import org.apache.calcite.util.ImmutableNullableList;
 
@@ -18,7 +19,6 @@ import java.util.List;
  * @Description
  */
 public class RboRuleUitls {
-
 
   /**
    * rbo rules
@@ -37,6 +37,7 @@ public class RboRuleUitls {
         FilterAggregateTransposeRule.INSTANCE,
         /* rule that pushes a Project past a Join */
         ProjectJoinTransposeRule.INSTANCE,
+        ProjectRemoveRule.INSTANCE,
         /* Planner rule that pushes a Project past a Sort */
         ProjectSortTransposeRule.INSTANCE, ProjectMergeRule.INSTANCE);
     return defaultRuleList;

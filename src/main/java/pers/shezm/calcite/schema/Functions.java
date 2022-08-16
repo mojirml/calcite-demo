@@ -9,7 +9,6 @@ package pers.shezm.calcite.schema;
 public class Functions {
 
   public static Object sys_convert_time(Object field, String format) {
-
     return new Object();
   }
 

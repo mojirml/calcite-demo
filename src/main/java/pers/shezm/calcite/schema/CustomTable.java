@@ -29,6 +29,7 @@ public class CustomTable extends AbstractTable {
             String.format("convert column:%s columnType: %s to sqlTypeName error",
                 column.getColumnName(), column.getColumnType()));
       }
+      System.out.println(dataType);
       detail.put(column.getColumnName(),
           new CustomColumn(tableName, column.getColumnName(), dataType));
     }
